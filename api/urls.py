@@ -6,18 +6,24 @@ from rest_framework_simplejwt.views import (
 
 from . import views
 
-router = DefaultRouter()
-router.register(r'posts', views.PostViewSet, basename='posts')
-router.register(
-    r'posts/(?P<post_id>[0-9]+)/comments', views.CommentViewSet,
-    basename='comments'
+router_v1 = DefaultRouter()
+router_v1.register(
+    r'posts', views.PostViewSet, basename='posts'
 )
-router.register(r'follow', views.FollowViewSet, basename='follow')
-router.register(r'group', views.GroupViewSet, basename='group')
+router_v1.register(
+    r'posts/(?P<post_id>[0-9]+)/comments',
+    views.CommentViewSet, basename='comments'
+)
+router_v1.register(
+    r'follow', views.FollowViewSet, basename='follow'
+)
+router_v1.register(
+    r'group', views.GroupViewSet, basename='group'
+)
 
 
 urlpatterns = [
-    path('', include(router.urls)),
-    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('v1/', include(router_v1.urls)),
+    path('v1/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('v1/token/refresh/', TokenRefreshView.as_view(), name='token_refresh')
 ]
